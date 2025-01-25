@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Futuriste Rouge</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: black;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #d32f2f, #b71c1c);
+            animation: moveBackground 10s linear infinite;
+            z-index: -1;
+            filter: blur(15px);
+            pointer-events: none;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+        .header {
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+        }
+
+        .key-entry {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .key-entry input {
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            width: 250px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .key-entry button {
+            padding: 10px 20px;
+            background-color: #d32f2f;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .key-entry button:hover {
+            background-color: #b71c1c;
+        }
+
+        .content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu {
+            display: flex;
+            gap: 40px;
+            font-size: 20px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 5px;
+            background: rgba(255, 0, 0, 0.7);
+            transition: 0.3s;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .menu a:hover {
+            background: rgba(255, 0, 0, 1);
+            transform: scale(1.1);
+        }
+
+        .section {
+            display: none;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: #d32f2f;
+            padding: 10px 25px;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #b71c1c;
+            transform: scale(1.05);
+        }
+
+        .eye-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            color: white;
+        }
+
+        .embed-form {
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+        }
+
+        .embed-form input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .embed-form button {
+            background-color: #d32f2f;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .embed-form button:hover {
+            background-color: #b71c1c;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-item button {
+            background: #d32f2f;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .info-item button:hover {
+            background: #b71c1c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background"></div>
+
+    <div class="header">Futur Site Rouge</div>
+
+    <div id="key-entry" class="key-entry">
+        <h2>Entrez la clé d'accès pour continuer</h2>
+        <div style="position: relative;">
+            <input type="password" id="key-input" placeholder="Entrez la clé">
+            <span class="eye-icon" id="eye-icon" onclick="togglePassword()">👁️</span>
+        </div>
+        <button onclick="checkKey()">Valider</button>
+    </div>
+
+    <div id="menu" class="content">
+        <div class="menu">
+            <a href="#" id="info-personnel-btn" onclick="showInfo()">Info Personnelle</a>
+            <a href="#" id="reseaux-sociaux-btn" onclick="showSocial()">Réseaux Sociaux</a>
+        </div>
+
+        <div id="info-personnel" class="section">
+            <h2>Mes Informations Personnelles</h2>
+            <div id="info-list"></div>
+            <button class="btn" onclick="showForm()">Ajouter des Infos</button>
+            <button class="btn" onclick="hideInfo()">Retour</button>
+        </div>
+
+        <div id="reseaux-sociaux" class="section">
+            <h2>Mes Réseaux Sociaux</h2>
+            <ul>
+                <li><a href="https://www.roblox.com/fr/users/4531308270/profile" target="_blank">Roblox</a></li>
+                <li><a href="https://www.youtube.com/channel/UCd1Lec9qItXI9BWseQ1gniQ" target="_blank">YouTube</a></li>
+                <li><a href="https://www.tiktok.com/@noe_mch?_t=ZN-8tJP3" target="_blank">TikTok</a></li>
+                <li><a href="https://open.spotify.com/user/31t2fahejv5mypgvawim4g6okfne" target="_blank">Spotify</a></li>
+                <li><a href="https://www.epicgames.com/id/solø_nœ" target="_blank">Epic Games</a></li>
+            </ul>
+            <button class="btn" onclick="hideSocial()">Retour</button>
+        </div>
+
+        <!-- Formulaire interactif d'ajout d'info -->
+        <div id="form-container" class="form-container" style="display: none;">
+            <div class="embed-form">
+                <h3>Ajouter des Informations Personnelles</h3>
+                <input type="text" id="label" placeholder="Étiquette (ex: Prénom, Age, Ville)">
+                <input type="text" id="value" placeholder="Valeur">
+                <button onclick="addInfo()">Ajouter</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const accessKey = "8Favm3KjvY584BZFz95Lp385R2dZibuK";
+
+        // Vérifie la clé à chaque fois qu'on revient ou qu'on actualise la page
+        function checkKey() {
+            let enteredKey = document.getElementById("key-input").value;
+
+            if (enteredKey === accessKey) {
+                document.getElementById("key-entry").style.display = "none";
+                document.getElementById("menu").style.display = "flex";
+                loadInfo(); // Charge les infos personnelles sauvegardées
+            } else {
+                alert("Clé incorrecte. Accès refusé.");
+            }
+        }
+
+        function showInfo() {
+            document.getElementById("info-personnel").style.display = "block";
+            document.getElementById("reseaux-sociaux").style.display = "none";
+        }
+
+        function showSocial() {
+            document.getElementById("reseaux-sociaux").style.display = "block";
+            document.getElementById("info-personnel").style.display = "none";
+        }
+
+        function hideInfo() {
+            document.getElementById("info-personnel").style.display = "none";
+            document.getElementById("menu").style.display = "flex";
+        }
+
+        function hideSocial() {
+            document.getElementById("reseaux-sociaux").style.display = "none";
+            document.getElementById("menu").style.display = "flex";
+        }
+
+        function showForm() {
+            document.getElementById("form-container").style.display = "block";
+        }
+
+        // Fonction d'ajout d'information
+        function addInfo() {
+            let label = document.getElementById('label').value;
+            let value = document.getElementById('value').value;
+
+            if (label && value) {
+                let storedInfo = JSON.parse(localStorage.getItem('personalInfo')) || {};
+
+                // Ajouter ou mettre à jour l'info
+                storedInfo[label] = value;
+
+                localStorage.setItem('personalInfo', JSON.stringify(storedInfo));
+
+                // Ajouter la nouvelle info à la fin de la liste
+                let newInfo = document.createElement('div');
+                newInfo.classList.add('info-item');
+                newInfo.innerHTML = 
+                    `<strong>${label}:</strong> ${value}
+                    <button onclick="deleteInfo('${label}')">Supprimer</button>`;
+
+                // Ajouter la nouvelle info à la fin de la liste
+                let infoList = document.getElementById('info-list');
+                infoList.insertBefore(newInfo, infoList.lastChild);
+
+                // Réinitialiser les champs
+                document.getElementById('label').value = '';
+                document.getElementById('value').value = '';
+
+                document.getElementById('form-container').style.display = 'none'; // Masquer le formulaire après ajout
+            }
+        }
+
+        // Supprimer une information
+        function deleteInfo(label) {
+            let storedInfo = JSON.parse(localStorage.getItem('personalInfo')) || {};
+            delete storedInfo[label];
+            localStorage.setItem('personalInfo', JSON.stringify(storedInfo));
+            loadInfo(); // Recharger les infos après suppression
+        }
+
+        // Charger et afficher les informations
+        function loadInfo() {
+            let storedInfo = JSON.parse(localStorage.getItem('personalInfo')) || {};
+
+            // Ajouter les informations de base si elles n'existent pas encore
+            if (!storedInfo["Prénom"]) {
+                storedInfo["Prénom"] = "Noe";
+            }
+            if (!storedInfo["Nom"]) {
+                storedInfo["Nom"] = "Test";
+            }
+
+            // Réinitialiser la liste avant de la remplir
+            let infoList = document.getElementById('info-list');
+            infoList.innerHTML = '';
+
+            // Afficher les infos de haut en bas
+            for (let key in storedInfo) {
+                let newInfo = document.createElement('div');
+                newInfo.classList.add('info-item');
+                newInfo.innerHTML = 
+                    `<strong>${key}:</strong> ${storedInfo[key]}
+                    <button onclick="deleteInfo('${key}')">Supprimer</button>`;
+                infoList.appendChild(newInfo);
+            }
+        }
+
+        // Fonction pour afficher/masquer le mot de passe
+        function togglePassword() {
+            let input = document.getElementById("key-input");
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+    </script>
+
+</body>
+</html>
